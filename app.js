@@ -1,15 +1,7 @@
 const qrcode = require("qrcode-terminal");
 const moment = require("moment");
-const cheerio = require("cheerio");
 const fs = require("fs");
-const dl = require("./lib/downloadImage.js");
-const fetch = require('node-fetch');
-const urlencode = require("urlencode");
-const axios = require("axios");
-const imageToBase64 = require('image-to-base64');
-const menu = require("./menu.js");
 const calc = require("./lib/calc.js");
-const { exec } = require("child_process");
 const
 {
    WAConnection,
@@ -65,25 +57,6 @@ conn.on('message-new', async(m) =>
    console.log(`[ ${moment().format("HH:mm:ss")} ] (${id.split("@s.whatsapp.net")[0]} => ${text}`);
 
 
-// Groups
-
-if (text.includes("!buatgrup"))
-   {
-var nama = text.split("!buatgrup")[1].split("-nomor")[0];
-var nom = text.split("-nomor")[1];
-var numArray = nom.split(",");
-for ( var i = 0; i < numArray.length; i++ ) {
-    numArray[i] = numArray[i] +"@s.whatsapp.net";
-}
-var str = numArray.join("");
-console.log(str)
-const group = await conn.groupCreate (nama, str)
-console.log ("created group with id: " + group.gid)
-conn.sendMessage(group.gid, "hello everyone", MessageType.extendedText) // say hello to everyone on the group
-
-}
-
-// FF
 if (messageType === MessageType.location || messageType === MessageType.liveLocation) {
    const locMessage = m.message[messageType];
   
